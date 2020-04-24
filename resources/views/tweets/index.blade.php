@@ -26,7 +26,7 @@
     <ul class="row">
       @foreach( $tweets as $tweet )
         <li class="col-md-3">
-          <h3>{{ $tweet->user()->name }}</h3>
+          <h3>{{-- ( $tweet->user())->name --}}</h3>
           <p>
             {{ $tweet->message }}
           </p>
@@ -34,7 +34,7 @@
             <div class="col-md-4">
               <a href="{{ route( 'tweets.show', $tweet->id ) }}" class="btn btn-info">Read More</a>
             </div>
-            @if( $tweet->user()->id === $tweet->user_id )
+            {{--@if( $tweet->user()->id === $tweet->user_id )
               <div class="col-md-4">
                 <a href="{{ route( 'tweets.edit', $tweet->id ) }}" class="btn btn-primary">Edit</a>
               </div>
@@ -42,7 +42,7 @@
                 <button type="submit" class="btn btn-danger">Delete</button>
                 @csrf
               </form>
-            @endif
+            @endif--}}
           </div>
         </li>
       @endforeach

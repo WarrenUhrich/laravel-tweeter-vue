@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Tweet;
 use Illuminate\Http\Request;
 

@@ -1,6 +1,7 @@
 @extends( 'layouts.app' )
 
 @section( 'content' )
+
   <section class="container">
     <div class="row">
       <h2 class="col-md-8">Tweeter Feed</h2>
