@@ -25,20 +25,10 @@
         </ul>
       </div>
     @endif
-    <form action="{{ route( 'tweets.store' ) }}" method="POST">
-      @csrf
-      <div class="row">
-        <div class="col-md-12">
-          <div class="form-group">
-            <strong>Message</strong>
-            <textarea name="message"></textarea>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <input class="btn btn-primary" type="submit" value="Create">
-        </div>
-      </div>
-    </form>
+    <div id="app">
+      <tweet-create-form submission-url="{{ route( 'tweets.store' ) }}">
+        @csrf
+      </tweet-create-form>
+      <Giphy />
+    </div>
   </section>

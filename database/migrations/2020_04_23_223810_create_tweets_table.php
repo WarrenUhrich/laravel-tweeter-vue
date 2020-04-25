@@ -17,6 +17,7 @@ class CreateTweetsTable extends Migration
             $table->id();
             $table->bigInteger( 'user_id' );
             $table->string( 'message' );
+            $table->boolean( 'is_gif' )->default( false );
             $table->timestamps();
         });
     }
