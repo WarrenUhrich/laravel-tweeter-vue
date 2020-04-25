@@ -26,9 +26,11 @@
       </div>
     @endif
     <div id="app">
-      <tweet-create-form submission-url="{{ route( 'tweets.store' ) }}">
+      <tweet-create-form
+        v-model="message"
+        submission-url="{{ route( 'tweets.store' ) }}">
         @csrf
       </tweet-create-form>
-      <Giphy />
+      <Giphy v-on:image-clicked="imageClicked" />
     </div>
   </section>

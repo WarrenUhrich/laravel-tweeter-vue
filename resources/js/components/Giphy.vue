@@ -18,7 +18,7 @@
         <ul class="columns is-multiline">
           <li
             v-for="image in results.data"
-            :key="image"
+            :key="image.id"
             class="column is-one-quarter">
             <img
               :src="image.images.fixed_width.url"
@@ -57,6 +57,8 @@ export default {
     {
       const img = event.target;
       console.log( img.src );
+      // Bubble upward an "imageClicked" event with the image's source.
+      this.$emit( 'image-clicked', img.src );
     }
   }
 }

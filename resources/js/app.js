@@ -30,4 +30,15 @@ Vue.component( 'tweet-create-form', require('./components/TweetCreateForm.vue' )
 
 const app = new Vue({
     el: '#app',
+    data: {
+        message: ''
+    },
+    methods: {
+        imageClicked ( imgSrc )
+        {
+            console.log( 'clicked' );
+            console.log( imgSrc );
+            this.message = imgSrc;
+        }
+    }
 });

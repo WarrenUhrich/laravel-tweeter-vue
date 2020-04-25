@@ -1967,7 +1967,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     getImageUrl: function getImageUrl(event) {
       var img = event.target;
-      console.log(img.src);
+      console.log(img.src); // Bubble upward an "imageClicked" event with the image's source.
+
+      this.$emit('image-clicked', img.src);
     }
   }
 });
@@ -2004,7 +2006,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'tweet-create-form',
-  props: ['submissionUrl']
+  props: ['submissionUrl'],
+  computed: {
+    message: {
+      get: function get() {
+        return this.$attrs.value;
+      },
+      set: function set(value) {
+        this.$emit('input', value);
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -37710,7 +37722,7 @@ var render = function() {
           _vm._l(_vm.results.data, function(image) {
             return _c(
               "li",
-              { key: image, staticClass: "column is-one-quarter" },
+              { key: image.id, staticClass: "column is-one-quarter" },
               [
                 _c("img", {
                   attrs: {
@@ -37769,25 +37781,44 @@ var render = function() {
   return _c(
     "form",
     { attrs: { action: _vm.submissionUrl, method: "post" } },
-    [_vm._t("default"), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)],
+    [
+      _vm._t("default"),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("strong", [_vm._v("Message")]),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.message,
+                  expression: "message"
+                }
+              ],
+              attrs: { name: "message" },
+              domProps: { value: _vm.message },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.message = $event.target.value
+                }
+              }
+            })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ],
     2
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("strong", [_vm._v("Message")]),
-          _vm._v(" "),
-          _c("textarea", { attrs: { name: "message" } })
-        ])
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -49999,7 +50030,17 @@ Vue.component('tweet-create-form', __webpack_require__(/*! ./components/TweetCre
  */
 
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  data: {
+    message: ''
+  },
+  methods: {
+    imageClicked: function imageClicked(imgSrc) {
+      console.log('clicked');
+      console.log(imgSrc);
+      this.message = imgSrc;
+    }
+  }
 });
 
 /***/ }),
