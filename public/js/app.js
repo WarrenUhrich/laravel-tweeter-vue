@@ -2004,18 +2004,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'tweet-create-form',
   props: ['submissionUrl'],
   computed: {
     message: {
       get: function get() {
+        // Check if it is a GIF URL, or a regular message.
+        // Updates our this.isGif data in storage.
+        this.isStringAGIFUrl(this.$attrs.value);
         return this.$attrs.value;
       },
       set: function set(value) {
         this.$emit('input', value);
       }
     }
+  },
+  methods: {
+    isStringAGIFUrl: function isStringAGIFUrl(string) {
+      if (string.includes('http') && string.includes('.gif')) {
+        this.isGif = true;
+        return true;
+      }
+
+      this.isGif = false;
+      return false;
+    },
+    resetMessage: function resetMessage() {
+      this.message = '';
+    }
+  },
+  data: function data() {
+    return {
+      isGif: false
+    };
   }
 });
 
@@ -37784,34 +37814,75 @@ var render = function() {
     [
       _vm._t("default"),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("strong", [_vm._v("Message")]),
-            _vm._v(" "),
-            _c("textarea", {
-              directives: [
+      _vm.isGif
+        ? _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("img", { attrs: { src: _vm.message } }),
+              _vm._v(" "),
+              _c(
+                "button",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.message,
-                  expression: "message"
-                }
-              ],
-              attrs: { name: "message" },
-              domProps: { value: _vm.message },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                  staticClass: "btn btn-warning",
+                  on: { click: _vm.resetMessage }
+                },
+                [_vm._v("Reset")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.message,
+                    expression: "message"
                   }
-                  _vm.message = $event.target.value
+                ],
+                attrs: { type: "hidden", name: "message" },
+                domProps: { value: _vm.message },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.message = $event.target.value
+                  }
                 }
-              }
-            })
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "is_gif" },
+                domProps: { value: _vm.isGif }
+              })
+            ])
           ])
-        ])
-      ]),
+        : _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("strong", [_vm._v("Message")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.message,
+                      expression: "message"
+                    }
+                  ],
+                  attrs: { name: "message" },
+                  domProps: { value: _vm.message },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.message = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ])
+          ]),
       _vm._v(" "),
       _vm._m(0)
     ],
